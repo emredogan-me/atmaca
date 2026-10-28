@@ -1,0 +1,5 @@
+# Atmaca derleme kabı: Fedora 44 + ISO üretim araçları (bir kez derlenir, sonra hazır)
+FROM registry.fedoraproject.org/fedora:44
+RUN dnf -y install lorax pykickstart anaconda-core anaconda-tui rpm-build \
+        grub2-efi-x64-cdboot shim-x64 syslinux && dnf clean all
+WORKDIR /atmaca
