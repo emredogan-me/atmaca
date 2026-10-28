@@ -47,7 +47,7 @@ jobs:
                 --volid Atmaca-44-${MASAUSTU} \
                 --iso-name atmaca-${MASAUSTU}.iso \
                 --logfile build/livemedia.log || true
-              # Fedora 44 lorax ISO'yu images/boot.iso olarak bırakıyor; adını biz veriyoruz
+              # Fedora 44 lorax sonucu images/boot.iso olarak birakir, adini biz veriyoruz
               if [ -f build/iso/images/boot.iso ]; then
                 mv build/iso/images/boot.iso build/iso/atmaca-${MASAUSTU}.iso
               fi
