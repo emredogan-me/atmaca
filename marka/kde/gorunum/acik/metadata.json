@@ -1,0 +1,16 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Atmaca Linux"
+            }
+        ],
+        "Category": "",
+        "Description": "Atmaca Linux açık görünümü",
+        "Id": "org.atmaca.acik.desktop",
+        "License": "GPLv2+",
+        "Name": "Atmaca Açık",
+        "Website": "https://github.com/emredogan-me/atmaca"
+    }
+}

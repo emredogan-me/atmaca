@@ -1,0 +1,43 @@
+/* Atmaca Linux — kurucu (Anaconda Web UI) ve Cockpit markası.
+   Cockpit bu klasörü os-release ID'sine göre seçer: /usr/share/cockpit/branding/atmaca/
+   Biz olmasaydık ID_LIKE=fedora üzerinden Fedora'nın renkleri ve logosu gelirdi. */
+#badge {
+    inline-size: 80px;
+    block-size: 80px;
+    background-image: url("logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#brand::before {
+    content: "${NAME} <b>${VARIANT}</b>";
+}
+
+.anaconda {
+    /* Atmaca paleti */
+    --brand-default-light: #60A5FA;
+    --brand-default: #3B82F6;
+    --brand-default-dark: #1E3A8A;
+
+    .logo {
+        background-image: url("logo.png");
+    }
+}
+
+:not(.pf-v6-theme-dark) .anaconda {
+    --pf-t--global--color--brand--default: var(--brand-default);
+    --pf-t--global--color--brand--hover: var(--brand-default-dark);
+}
+
+.pf-v6-theme-dark .anaconda {
+    --pf-t--global--color--brand--default: var(--brand-default-light);
+    --pf-t--global--color--brand--hover: var(--brand-default);
+}
+
+/* Kurucu, tek renkli dağıtım logolarını koyu temada beyaza çevirmek için filtre uygular.
+   Atmaca logosu renkli; olduğu gibi görünsün. */
+.anaconda .logo,
+.pf-v6-theme-dark .anaconda .logo {
+    filter: none !important;
+    mix-blend-mode: normal !important;
+}

@@ -6,7 +6,7 @@
 
 Name:           atmaca-release
 Version:        %{surum}
-Release:        1
+Release:        2
 Summary:        Atmaca Linux sürüm ve kimlik dosyaları
 License:        MIT
 BuildArch:      noarch
@@ -32,6 +32,7 @@ Provides:       fedora-release-kde-desktop = %{version}-99
 Obsoletes:      fedora-release-identity-kde < 99
 Obsoletes:      fedora-release-identity-basic < 99
 Conflicts:      generic-release
+Requires:       atmaca-repos
 
 %description
 Atmaca Linux'un adı, sürümü, /etc/os-release dosyası ve sistem ön ayarları.

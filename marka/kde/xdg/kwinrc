@@ -1,0 +1,7 @@
+# Pencere çerçevesi: KDE'nin hızlı ve kararlı Breeze çerçevesi, Atmaca renkleriyle.
+# Düğmeler sağda: küçült (I), büyüt (A), kapat (X); solda pencere menüsü (M).
+[org.kde.kdecoration2]
+library=org.kde.breeze
+theme=Breeze
+ButtonsOnLeft=M
+ButtonsOnRight=IAX

@@ -1,44 +1,51 @@
 # Atmaca Linux — KDE Plasma sürümü
-# İlke: eksiksiz bir masaüstü, ama gereksiz yük yok.
-# Fedora'nın "kde-desktop-environment" ortamındaki zorunlu gruplar alınır;
-# kde-apps / kde-media / kde-pim / libreoffice gibi "varsayılan ekler" alınmaz,
-# yerine her gün gereken uygulamalar tek tek seçilir.
+# İlke: Fedora 44 KDE ile birebir aynı paket seti — ne eksik ne fazla.
+# Fedora'nın "KDE Plasma Workspaces" ortamı (kde-desktop-environment): bütün zorunlu
+# grupları + varsayılan grupları. Farklar yalnızca şunlar:
+#   - Fedora marka paketleri yerine Atmaca'nınkiler (atmaca-taban.ks)
+#   - ek olarak Thunderbird
+#   - Flathub, Fedora'nın paketi yerine atmaca-repos içinden gelir
 %include atmaca-taban.ks
 
 %packages
-# KDE ortamının zorunlu grupları (dial-up, input-methods, guest-agents hariç)
-@base-graphical
-@printing
-@desktop-accessibility
+# Ortamın zorunlu grupları
 @admin-tools
+@base-graphical
+@desktop-accessibility
+@dial-up
+@guest-desktop-agents
+@input-methods
 @kde-desktop
+@printing
+# (core, fonts, hardware-support, multimedia, networkmanager-submodules, standard: atmaca-taban.ks)
 
-# Günlük uygulamalar (kde-apps / kde-media yerine seçilmiş)
-firefox
-okular                  # PDF / belge
-gwenview                # resim
-kcalc                   # hesap makinesi
-elisa-player            # müzik
-haruna                  # video
-kate                    # metin düzenleyici
+# Ortamın varsayılan grupları
+@firefox
+@kde-apps
+@kde-media
+@kde-pim
+@libreoffice
+libreoffice-langpack-tr
 
-# --- Gereksizler ---
-# Akonadi + MariaDB: yalnızca KMail/KOrganizer içindir, onları kurmuyoruz
--akonadi-server
--akonadi-server-mysql
--mariadb*
--kio-gdrive
-# Hata raporlayıcı Fedora'nın sunucularına gönderir
--abrt*
-# Fedora'ya özel depo/marka paketleri (Aşama 3'te Atmaca karşılıkları gelecek)
+# Ek olarak: Thunderbird e-posta (KMail de duruyor)
+thunderbird
+
+# Atmaca görünümü: renkler, açılış/giriş ekranı, duvar kâğıtları, panel
+atmaca-plasma
+atmaca-arkaplan
+rsms-inter-fonts        # Atmaca'nın arayüz yazı tipi
+
+# --- Fedora'dan farklı olanlar ---
+# Fedora'nın Flathub ayar paketi: aynısını atmaca-repos kuruyor
 -fedora-flathub-remote
+# Fedora logolu simge ve Discover'daki "Fedora Linux" bileşeni
+-breeze-icon-theme-fedora
+-fedora-appstream-metadata
+# Üçüncü parti depo tanımları (Chrome, NVIDIA, Steam) Fedora adıyla gelir;
+# Atmaca'nın kendi sürümü yapılana kadar yok
 -fedora-workstation-repositories
--NetworkManager-config-connectivity-fedora
-# Uzak masaüstü sunucuları ve kullanım anketi
--krdp
--krfb
--kde-inotify-survey
--plasma-desktop-doc
+# Çökme raporlarını Fedora'nın sunucularına gönderir
+-abrt*
 %end
 
 %post

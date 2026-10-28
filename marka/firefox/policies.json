@@ -1,0 +1,9 @@
+{
+  "policies": {
+    "Homepage": { "URL": "about:home", "StartPage": "homepage" },
+    "OverrideFirstRunPage": "",
+    "Preferences": {
+      "browser.newtabpage.pinned": { "Value": "[]", "Status": "default" }
+    }
+  }
+}

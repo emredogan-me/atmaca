@@ -1,0 +1,61 @@
+[Plymouth Theme]
+Name=Atmaca
+Description=Atmaca Linux açılış ekranı: lacivert zemin, ortada logo, altında dönen simge
+ModuleName=two-step
+
+[two-step]
+Font=Cantarell 12
+TitleFont=Cantarell Light 30
+ImageDir=/usr/share/plymouth/themes/atmaca
+DialogHorizontalAlignment=.5
+DialogVerticalAlignment=.382
+TitleHorizontalAlignment=.5
+TitleVerticalAlignment=.382
+HorizontalAlignment=.5
+VerticalAlignment=.75
+WatermarkHorizontalAlignment=.5
+WatermarkVerticalAlignment=.42
+Transition=none
+TransitionDuration=0.0
+BackgroundStartColor=0x0d1b2a
+BackgroundEndColor=0x0d1b2a
+ProgressBarBackgroundColor=0x1b263b
+ProgressBarForegroundColor=0x3b82f6
+MessageBelowAnimation=true
+
+[boot-up]
+UseEndAnimation=false
+
+[shutdown]
+UseEndAnimation=false
+
+[reboot]
+UseEndAnimation=false
+
+[updates]
+SuppressMessages=true
+ProgressBarShowPercentComplete=true
+UseProgressBar=true
+Title=Güncellemeler kuruluyor...
+SubTitle=Bilgisayarınızı kapatmayın
+
+[system-upgrade]
+SuppressMessages=true
+ProgressBarShowPercentComplete=true
+UseProgressBar=true
+Title=Sistem yükseltiliyor...
+SubTitle=Bilgisayarınızı kapatmayın
+
+[firmware-upgrade]
+SuppressMessages=true
+ProgressBarShowPercentComplete=true
+UseProgressBar=true
+Title=Donanım yazılımı güncelleniyor...
+SubTitle=Bilgisayarınızı kapatmayın
+
+[system-reset]
+SuppressMessages=true
+ProgressBarShowPercentComplete=true
+UseProgressBar=true
+Title=Sistem sıfırlanıyor...
+SubTitle=Bilgisayarınızı kapatmayın

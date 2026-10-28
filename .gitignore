@@ -1,3 +1,5 @@
 harici/
 build/
 *.iso
+teslim/
+.onizleme/

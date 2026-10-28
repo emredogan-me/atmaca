@@ -1,0 +1,16 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Atmaca Linux"
+            }
+        ],
+        "Category": "",
+        "Description": "Atmaca Linux koyu görünümü",
+        "Id": "org.atmaca.koyu.desktop",
+        "License": "GPLv2+",
+        "Name": "Atmaca Koyu",
+        "Website": "https://github.com/emredogan-me/atmaca"
+    }
+}

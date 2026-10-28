@@ -1,0 +1,18 @@
+# Atmaca Linux varsayılan KDE görünümü (kullanıcı değiştirirse onunki geçerli olur)
+[General]
+ColorScheme=AtmacaKoyu
+AccentColor=59,130,246
+font=Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+menuFont=Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+toolBarFont=Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+smallestReadableFont=Inter,8,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+
+[WM]
+activeFont=Inter,10,-1,5,600,0,0,0,0,0,0,0,0,0,0,1
+
+[Icons]
+Theme=Atmaca-Koyu
+
+[KDE]
+LookAndFeelPackage=org.atmaca.koyu.desktop
+widgetStyle=Breeze
