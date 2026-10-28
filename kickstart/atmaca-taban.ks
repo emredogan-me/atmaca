@@ -17,6 +17,8 @@ part / --size=12288 --fstype=ext4
 
 url --mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-44&arch=x86_64
 repo --name=updates --mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=updates-released-f44&arch=x86_64
+# Atmaca'nın kendi paketleri (tarifler/marka-derle.sh üretir). cost düşük = öncelikli
+repo --name=atmaca --baseurl=file:///atmaca/build/depo --cost=10
 
 services --enabled=NetworkManager,chronyd
 
@@ -52,6 +54,16 @@ glibc-langpack-en
 anaconda-live
 anaconda-install-env-deps
 
+# Atmaca kimliği — Fedora markasının yerine
+atmaca-release
+atmaca-logos
+-fedora-release*
+-fedora-logos
+-generic-release*
+-generic-logos
+-fedora-bookmarks
+-fedora-chromium-config*
+
 # Atmaca'da istemediklerimiz
 -@dial-up
 -@input-methods
@@ -62,5 +74,8 @@ anaconda-install-env-deps
 systemctl enable livesys.service livesys-late.service
 
 # Henüz atmaca-release yok: canlı sistemde en azından adımızı görelim
-echo "Atmaca Linux (geliştirme) — Fedora 44 tabanı" > /etc/issue.d/atmaca.issue
+# Fedora'dan kalan bir şey var mı? Derleme kaydına yaz (doğrulama için)
+echo "=== ATMACA KİMLİK DENETİMİ ==="
+cat /etc/os-release
+rpm -qa | grep -iE '^(fedora|generic)-(release|logos)' && echo "UYARI: Fedora marka paketi kaldı" || echo "Fedora marka paketi yok"
 %end

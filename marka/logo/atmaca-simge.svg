@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Atmaca simgesi: daire içinde kanatlarını açmış, aşağı süzülen bir atmaca -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f4e79"/>
+      <stop offset="1" stop-color="#0f2a44"/>
+    </linearGradient>
+  </defs>
+  <circle cx="128" cy="128" r="120" fill="url(#g)"/>
+  <!-- sol kanat -->
+  <path d="M128 112 L36 84 Q58 120 104 134 Z" fill="#f2a33a"/>
+  <!-- sağ kanat -->
+  <path d="M128 112 L220 84 Q198 120 152 134 Z" fill="#f2a33a"/>
+  <!-- gövde ve kuyruk -->
+  <path d="M128 92 Q142 112 140 140 L150 192 L128 178 L106 192 L116 140 Q114 112 128 92 Z" fill="#ffffff"/>
+  <!-- baş -->
+  <circle cx="128" cy="92" r="11" fill="#ffffff"/>
+  <path d="M128 99 L134 108 L128 105 Z" fill="#f2a33a"/>
+</svg>

@@ -37,12 +37,13 @@ jobs:
               dnf -y install lorax pykickstart anaconda-core anaconda-tui \
                   grub2-efi-x64-cdboot grub2-tools-extra grub2-pc-modules shim-x64 syslinux \
                   xorriso policycoreutils
+              bash tarifler/marka-derle.sh
               ksflatten -c kickstart/atmaca-${MASAUSTU}.ks -o build/atmaca-${MASAUSTU}.ks
               ksvalidator build/atmaca-${MASAUSTU}.ks
               livemedia-creator --make-iso --no-virt \
                 --ks build/atmaca-${MASAUSTU}.ks \
                 --resultdir build/iso \
-                --project Atmaca --releasever 44 \
+                --project "Atmaca Linux" --releasever 44 \
                 --volid Atmaca-44-${MASAUSTU} \
                 --iso-name atmaca-${MASAUSTU}.iso \
                 --logfile build/livemedia.log || true
@@ -68,6 +69,7 @@ jobs:
           path: |
             build/iso/atmaca-*.iso
             build/iso/SHA256SUMS
+            build/depo/*.rpm
           compression-level: 0
           retention-days: 14
 
