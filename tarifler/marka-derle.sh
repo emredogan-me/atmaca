@@ -18,7 +18,7 @@ dnf -y install rpm-build createrepo_c cpio librsvg2-tools ImageMagick findutils
 # ---------- 1) atmaca-release ----------
 dnf download --destdir=fedora fedora-release-common fedora-release-kde fedora-release-identity-kde
 mkdir -p release/agac
-for r in fedora/*.rpm; do (cd release/agac && rpm2cpio "$r" | cpio -idm --quiet); done
+for r in "$IS"/fedora/*.rpm; do (cd release/agac && rpm2cpio "$r" | cpio -idm --quiet); done
 echo "--- Fedora release paketlerinden gelen dosyalar:"; (cd release/agac && find . ! -type d | sort)
 
 A=release/agac
@@ -64,7 +64,7 @@ grep -rlI -e 'fedoraproject.org' $A | xargs -r sed -i 's#https\?://[a-z.]*fedora
 # ---------- 2) atmaca-logos ----------
 dnf download --destdir=generic generic-logos
 mkdir -p logos/agac
-(cd logos/agac && rpm2cpio ../../generic/*.rpm | cpio -idm --quiet)
+for r in "$IS"/generic/*.rpm; do (cd logos/agac && rpm2cpio "$r" | cpio -idm --quiet); done
 L=logos/agac
 SIMGE="$KOK/marka/logo/atmaca-simge.svg"
 YAZI="$KOK/marka/logo/atmaca-yazi.svg"

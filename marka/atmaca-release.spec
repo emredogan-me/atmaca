@@ -26,6 +26,9 @@ Provides:       generic-release = %{version}-99
 Obsoletes:      fedora-release < 99
 Obsoletes:      fedora-release-common < 99
 Obsoletes:      fedora-release-kde < 99
+Obsoletes:      fedora-release-kde-desktop < 99
+Obsoletes:      fedora-release-identity-kde-desktop < 99
+Provides:       fedora-release-kde-desktop = %{version}-99
 Obsoletes:      fedora-release-identity-kde < 99
 Obsoletes:      fedora-release-identity-basic < 99
 Conflicts:      generic-release
