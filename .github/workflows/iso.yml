@@ -54,6 +54,8 @@ jobs:
               # Kayıtları runner kullanıcısı da okuyabilsin (yükleme adımı için)
               chmod -R a+rX build
             '
+          # Kabın ürettiği dosyalar root'a ait; sonraki adımlar runner kullanıcısıyla yazabilsin
+          sudo chown -R "$(id -u):$(id -g)" build
           ls -lh build/iso
           # ISO yoksa hata ver ve nedenini doğrudan ekrana bas
           if ! ls build/iso/atmaca-*.iso >/dev/null 2>&1; then
