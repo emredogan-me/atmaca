@@ -79,6 +79,39 @@ jobs:
           compression-level: 0
           retention-days: 14
 
+      # ISO'yu QEMU'da açıp ekran görüntüleri alır (kurulum yapmaz, canlı oturum)
+      - name: QEMU'da açılış testi
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qemu-system-x86 ovmf imagemagick socat > /dev/null
+          sudo chmod 666 /dev/kvm || true
+          mkdir -p build/test
+          # UEFI ile, 4 GB bellek, 4 çekirdek; ekran yok, monitör bir sokete bağlı
+          qemu-system-x86_64 -enable-kvm -m 4096 -smp 4 -machine q35 \
+            -bios /usr/share/ovmf/OVMF.fd \
+            -cdrom build/iso/atmaca-${MASAUSTU}.iso -boot d \
+            -vga virtio -display none \
+            -nic user,model=virtio-net-pci \
+            -serial file:build/test/seri-konsol.txt \
+            -monitor unix:/tmp/qmon,server,nowait &
+          sleep 5
+          # 15 saniyede bir, 6 dakika boyunca ekran görüntüsü
+          for i in $(seq -w 1 24); do
+            sleep 15
+            echo "screendump /tmp/ekran.ppm" | socat - unix-connect:/tmp/qmon > /dev/null || true
+            [ -f /tmp/ekran.ppm ] && convert /tmp/ekran.ppm build/test/ekran-$i-$((10#$i*15))sn.png
+          done
+          echo "quit" | socat - unix-connect:/tmp/qmon || true
+          ls -l build/test
+
+      - name: Test ekran görüntülerini yükle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qemu-test-ekranlari
+          path: build/test/
+          if-no-files-found: ignore
+
       - name: Hata olursa kayıtları yükle
         if: failure()
         uses: actions/upload-artifact@v4
