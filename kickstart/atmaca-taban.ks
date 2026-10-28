@@ -45,6 +45,8 @@ syslinux
 # Türkçe
 langpacks-tr
 glibc-langpack-tr
+glibc-langpack-en
+-glibc-all-langpacks
 
 # Kurucu
 anaconda-live
