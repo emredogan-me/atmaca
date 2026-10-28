@@ -1,0 +1,71 @@
+# Atmaca ISO'sunu GitHub'ın sunucusunda üretir.
+# Elle başlatmak: GitHub → Actions → "Atmaca ISO" → Run workflow
+name: Atmaca ISO
+
+on:
+  workflow_dispatch:
+    inputs:
+      masaustu:
+        description: "Masaüstü (kde / gnome)"
+        default: kde
+  push:
+    branches: [main]
+    paths: ["kickstart/**", "tarifler/**", ".github/workflows/iso.yml"]
+
+jobs:
+  iso:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      MASAUSTU: ${{ github.event.inputs.masaustu || 'kde' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Sunucuda ~14 GB boş yer var; kullanmadığımız araçları silip ~45 GB'a çıkarıyoruz
+      - name: Yer aç
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache \
+                      /usr/local/share/boost /usr/share/swift /usr/local/.ghcup
+          sudo docker image prune -af
+          df -h /
+
+      - name: Fedora 44 kabında ISO üret
+        run: |
+          mkdir -p build
+          sudo docker run --rm --privileged -e MASAUSTU="$MASAUSTU" -v /dev:/dev -v "$PWD":/atmaca -w /atmaca \
+            registry.fedoraproject.org/fedora:44 bash -euxc '
+              dnf -y install lorax pykickstart anaconda-core anaconda-tui \
+                  grub2-efi-x64-cdboot shim-x64 syslinux
+              ksflatten -c kickstart/atmaca-${MASAUSTU}.ks -o build/atmaca-${MASAUSTU}.ks
+              ksvalidator build/atmaca-${MASAUSTU}.ks
+              livemedia-creator --make-iso --no-virt \
+                --ks build/atmaca-${MASAUSTU}.ks \
+                --resultdir build/iso \
+                --project Atmaca --releasever 44 \
+                --volid Atmaca-44-${MASAUSTU} \
+                --iso-name atmaca-${MASAUSTU}.iso \
+                --logfile build/livemedia.log
+            '
+          ls -lh build/iso
+
+      - name: Sağlama toplamı
+        run: cd build/iso && sha256sum atmaca-*.iso | tee SHA256SUMS
+
+      - name: ISO'yu yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: atmaca-${{ env.MASAUSTU }}-iso
+          path: |
+            build/iso/atmaca-*.iso
+            build/iso/SHA256SUMS
+          compression-level: 0
+          retention-days: 14
+
+      - name: Hata olursa kayıtları yükle
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kayitlar
+          path: |
+            build/*.log
+            build/anaconda/
