@@ -7,7 +7,7 @@ timezone Europe/Istanbul --utc
 selinux --enforcing
 firewall --enabled --service=mdns
 network --bootproto=dhcp --device=link --activate
-rootpw --lock --iscrypted locked
+rootpw --lock
 shutdown
 
 # Canlı ISO için tek bölüm; boyut kurulu sistem değil, canlı imajın kendisi
