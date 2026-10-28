@@ -35,7 +35,8 @@ jobs:
           sudo docker run --rm --privileged -e MASAUSTU="$MASAUSTU" -v /dev:/dev -v "$PWD":/atmaca -w /atmaca \
             registry.fedoraproject.org/fedora:44 bash -euxc '
               dnf -y install lorax pykickstart anaconda-core anaconda-tui \
-                  grub2-efi-x64-cdboot shim-x64 syslinux
+                  grub2-efi-x64-cdboot grub2-tools-extra grub2-pc-modules shim-x64 syslinux \
+                  xorriso policycoreutils
               ksflatten -c kickstart/atmaca-${MASAUSTU}.ks -o build/atmaca-${MASAUSTU}.ks
               ksvalidator build/atmaca-${MASAUSTU}.ks
               livemedia-creator --make-iso --no-virt \
@@ -44,9 +45,18 @@ jobs:
                 --project Atmaca --releasever 44 \
                 --volid Atmaca-44-${MASAUSTU} \
                 --iso-name atmaca-${MASAUSTU}.iso \
-                --logfile build/livemedia.log
+                --logfile build/livemedia.log || true
+              # Kayıtları runner kullanıcısı da okuyabilsin (yükleme adımı için)
+              chmod -R a+rX build
             '
           ls -lh build/iso
+          # ISO yoksa hata ver ve nedenini doğrudan ekrana bas
+          if ! ls build/iso/atmaca-*.iso >/dev/null 2>&1; then
+            echo "::error::ISO oluşmadı"
+            tail -60 build/livemedia.log || true
+            tail -60 build/program.log || true
+            exit 1
+          fi
 
       - name: Sağlama toplamı
         run: cd build/iso && sha256sum atmaca-*.iso | tee SHA256SUMS
@@ -69,3 +79,4 @@ jobs:
           path: |
             build/*.log
             build/anaconda/
+          if-no-files-found: ignore
