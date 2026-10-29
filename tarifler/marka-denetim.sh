@@ -8,6 +8,8 @@
 #   - çekirdek adındaki fc44, rpm makroları (%fedora): paket uyumu için
 #   - plasma-lookandfeel-fedora / kde-settings paketlerinin adı: KDE bunları zorunlu ister,
 #     içlerindeki görünür Fedora parçaları atmaca-plasma tetikleyicileriyle kaldırılır
+#   - NetworkManager-config-connectivity-fedora: internet bağlantısı denetimi (paket adı görünmez)
+#   - org.fedoraproject.Anaconda.*: kurucunun iç D-Bus adları (değiştirilirse kurucu çalışmaz)
 set -uo pipefail
 K="${1:?imaj kökü verilmeli}"
 SORUN=0
@@ -20,7 +22,7 @@ grep -qi fedora <(grep -E '^(NAME|PRETTY_NAME|VERSION|LOGO)=' "$K/etc/os-release
 
 baslik "Adında fedora geçen paketler"
 rpm --root "$K" -qa --qf '%{NAME}\n' | grep -i fedora | sort | while read -r p; do
-  case "$p" in plasma-lookandfeel-fedora|fedora-gpg-keys|fedora-repos-*) echo "beklenen: $p";;
+  case "$p" in plasma-lookandfeel-fedora|fedora-gpg-keys|fedora-repos-*|NetworkManager-config-connectivity-fedora) echo "beklenen: $p";;
                *) echo "SORUN: paket $p";; esac
 done
 
@@ -38,9 +40,11 @@ for d in usr/share/pixmaps usr/share/icons usr/share/wallpapers usr/share/backgr
          usr/share/color-schemes usr/share/sddm usr/share/applications etc/xdg etc/yum.repos.d; do
   [ -d "$K/$d" ] || continue
   find "$K/$d" -iname '*fedora*' 2>/dev/null | sed "s#^$K##"
-done | grep -v -E '^/usr/share/cockpit/branding/fedora|^/usr/share/icons/hicolor/.*/apps/fedora-logo|^/usr/share/pixmaps/fedora' \
+done | grep -v -E '^/usr/share/cockpit/branding/fedora|^/usr/share/icons/hicolor/.*/apps/fedora-logo|^/usr/share/pixmaps/fedora|/org\.fedoraproject\.Anaconda|^/usr/share/anaconda/gnome/' \
      | while read -r f; do echo "SORUN: $f"; done
-echo "(cockpit/branding/fedora, pixmaps/fedora-* ve fedora-logo simgeleri: dosya adı Fedora, içerik Atmaca — uygulamalar bu adları arar)"
+echo "(beklenen: cockpit/branding/fedora, pixmaps/fedora-*, fedora-logo simgeleri ve kurucu simgesi"
+echo " org.fedoraproject.AnacondaInstaller — dosya adı Fedora, içerik Atmaca, uygulamalar bu adları arar;"
+echo " org.fedoraproject.Anaconda.* — kurucunun iç D-Bus adları, görünmez; anaconda/gnome — KDE'de kullanılmaz)"
 
 baslik "Menüde/masaüstünde görünen yazılarda Fedora"
 grep -l -i -E '^(Name|GenericName|Comment)(\[(tr|en.*)\])?=.*fedora' \
