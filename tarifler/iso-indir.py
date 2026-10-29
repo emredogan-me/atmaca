@@ -62,6 +62,16 @@ class UzakDosya(io.RawIOBase):
                 r = urllib.request.urlopen(urllib.request.Request(
                     self.adres, headers={"Range": f"bytes={bas}-{son}"}), timeout=60)
                 return r.read(), r.headers.get("Content-Range", "")
+            except urllib.error.HTTPError as e:
+                if e.code == 403:
+                    # GitHub'ın verdiği geçici indirme adresinin süresi (~10 dk) doldu: yenisini al
+                    print(f"\n{time.strftime('%X')} indirme adresinin süresi doldu, yenisi alınıyor", flush=True)
+                    self.adres = self.adres_al()
+                    continue
+                print(f"\n{time.strftime('%X')} bağlantı sorunu ({e}); {10 * (deneme + 1)} sn sonra yeniden",
+                      flush=True)
+                time.sleep(10 * (deneme + 1))
+                continue
             except Exception as e:
                 print(f"\n{time.strftime('%X')} bağlantı sorunu ({e}); {10 * (deneme + 1)} sn sonra yeniden",
                       flush=True)
