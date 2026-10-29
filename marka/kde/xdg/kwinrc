@@ -1,7 +1,6 @@
-# Pencere çerçevesi: Atmaca Aurorae teması (marka/kde/aurorae, tarifler/cerceve-uret.py).
-# Düğmeler sağda: küçült (I) sarı, büyüt (A) yeşil, kapat (X) kırmızı daire; solda pencere menüsü (M).
+# Pencere çerçevesi: KDE'nin kendi Breeze çerçevesi, KDE'deki varsayılan haliyle.
+# (Atmaca'nın renkli daire düğmeli çerçevesi de kurulu gelir; Sistem Ayarları →
+#  Görünüm → Pencere Dekorasyonları bölümünden "Atmaca Koyu/Açık" seçilebilir.)
 [org.kde.kdecoration2]
-library=org.kde.kwin.aurorae
-theme=__aurorae__svg__Atmaca-Koyu
-ButtonsOnLeft=M
-ButtonsOnRight=IAX
+library=org.kde.breeze
+theme=Breeze

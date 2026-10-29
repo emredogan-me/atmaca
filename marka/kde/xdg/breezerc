@@ -1,8 +1,0 @@
-# Breeze pencere düğmeleri: büyük düğmeler, kapat düğmesi daire içinde vurgulu
-[Common]
-OutlineCloseButton=true
-ShadowSize=ShadowLarge
-
-[Windeco]
-ButtonSize=ButtonLarge
-DrawBackgroundGradient=false

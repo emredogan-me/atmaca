@@ -18,10 +18,8 @@ Image=Atmaca-Acik
 cursorTheme=breeze_cursors
 
 [kwinrc][org.kde.kdecoration2]
-library=org.kde.kwin.aurorae
-theme=__aurorae__svg__Atmaca-Acik
-ButtonsOnLeft=M
-ButtonsOnRight=IAX
+library=org.kde.breeze
+theme=Breeze
 
 [ksplashrc][KSplash]
 Theme=org.atmaca.koyu.desktop

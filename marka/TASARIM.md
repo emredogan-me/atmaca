@@ -45,7 +45,8 @@ Yazı tipi (logo ve başlıklar): **Poppins** (açık lisans, OFL)
 - Dil ve klavye: **Türkçe**, **Türkçe Q** klavye, İstanbul saat dilimi
 - Görünüm: **Atmaca Koyu** (Sistem Ayarları'ndan Atmaca Açık seçilebilir)
 - Yazı tipi: **Inter** (bütün arayüz), logo ve başlıklarda Poppins
-- Pencere düğmeleri: sağda küçült – büyüt – kapat, büyük boy, kapat düğmesi vurgulu
+- Pencere düğmeleri: KDE'nin kendi Breeze çerçevesi (varsayılan hali); Atmaca'nın renkli daire
+  düğmeli çerçevesi Sistem Ayarları'ndan seçilebilir
 - Panel: altta yüzen panel; Dosyalar, Firefox, Uçbirim, Yazılım Merkezi ve Ayarlar sabitlenmiş
 - Açılış: Plymouth'ta Atmaca logosu, KDE açılış ekranında logo ve ilerleme çubuğu
 - Giriş ve kilit ekranı: Atmaca zeminleri
