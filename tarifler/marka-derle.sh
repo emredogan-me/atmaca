@@ -114,6 +114,10 @@ magick "$VARLIK/logo-yazili-koyu.png" -resize x300 $P/watermark.png
 for f in $(rpm -qpl "$IS"/generic/plymouth-theme-spinner-*.rpm | grep '/themes/spinner/.*\.png$'); do
   b=$(basename $f); [ "$b" = watermark.png ] || ln -sf ../spinner/$b $P/$b
 done
+# fastfetch: Fedora yerine Atmaca logosu (marka/fastfetch, chafa ile çizilmiş renkli logo)
+mkdir -p $L/usr/share/atmaca $L/etc/xdg/fastfetch
+cp "$KOK/marka/fastfetch/atmaca-logo.txt" $L/usr/share/atmaca/fastfetch-logo.txt
+cp "$KOK/marka/fastfetch/config.jsonc" $L/etc/xdg/fastfetch/config.jsonc
 # Kurucu (Anaconda Web UI) ve Cockpit markası: os-release ID'sine göre seçilir
 C=$L/usr/share/cockpit/branding/atmaca; mkdir -p $C
 cp "$KOK/marka/kurucu/branding.css" $C/

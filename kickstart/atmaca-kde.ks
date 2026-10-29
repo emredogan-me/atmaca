@@ -27,8 +27,9 @@
 @libreoffice
 libreoffice-langpack-tr
 
-# Ek olarak: Thunderbird e-posta (KMail de duruyor)
+# Ek olarak: Thunderbird e-posta (KMail de duruyor) ve fastfetch (Atmaca logolu sistem bilgisi)
 thunderbird
+fastfetch
 
 # Atmaca görünümü: renkler, açılış/giriş ekranı, duvar kâğıtları, panel
 atmaca-plasma
