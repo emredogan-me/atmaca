@@ -71,6 +71,21 @@ atmaca-repos
 # Canlı oturum hizmeti (liveuser oluşturur)
 systemctl enable livesys.service livesys-late.service
 
+# Türkçe Q klavye: kurucu imaj derlenirken bu dosyaları yazmıyor, canlı oturum için
+# biz yazıyoruz. Kurulumda kurucu, kullanıcının seçtiği klavyeyi bunların üstüne yazar.
+cat > /etc/vconsole.conf <<EOF
+KEYMAP="trq"
+FONT="eurlatgr"
+EOF
+mkdir -p /etc/X11/xorg.conf.d
+cat > /etc/X11/xorg.conf.d/00-keyboard.conf <<EOF
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "tr"
+EndSection
+EOF
+
 # Açılış ekranı (Plymouth): Atmaca teması. Canlı imajın initramfs'i bundan sonra
 # yeniden üretildiği için tema ISO'nun açılışına da girer.
 plymouth-set-default-theme atmaca
