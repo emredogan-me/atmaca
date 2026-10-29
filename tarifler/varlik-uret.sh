@@ -23,22 +23,28 @@ magick $K/logo-yesil.png -alpha set -fuzz 30% -transparent '#00FF00' \
   -resize 1024x1024 $V/logo.png
 for s in 16 22 24 32 48 64 96 128 256 512; do magick $V/logo.png -resize ${s}x${s} $V/logo-$s.png; done
 
-# 2) Yazılı logo (koyu zemin için): simge + ATMACA + slogan, şeffaf
-yazili() { # $1=çıktı $2=yazı rengi
+# 2) Yazılı logo: simge + ATMACA + harf aralıklı LINUX (+ isteğe bağlı slogan), şeffaf.
+#    Sloganlı sürüm yalnızca duvar kâğıtlarında; açılış, kurucu vb. yerlerde sloganı yok.
+yazili() { # $1=çıktı $2=ATMACA rengi $3=LINUX rengi $4=slogan (boşsa yok)
+  local slogan=()
+  [ -n "${4:-}" ] && slogan=( \( -size 1x40 xc:none +size \) \( -font $INCE -pointsize 50 -kerning 0 -fill "$ACIKMAVI" label:"$4" \) )
   magick -background none \
     \( $V/logo.png -resize 420x420 \) \
     \( -font $KALIN -pointsize 150 -fill "$2" -kerning 12 label:ATMACA \) \
-    \( -font $INCE -pointsize 54 -fill "$ACIKMAVI" label:"$SLOGAN" \) \
+    \( -font $KALIN -pointsize 64 -fill "$3" -kerning 46 label:LINUX \) \
+    "${slogan[@]}" \
     -gravity center -append "$1"
 }
-yazili $V/logo-yazili-koyu.png "$BEYAZ"
-yazili $V/logo-yazili-acik.png "#1B263B"
+yazili $V/logo-yazili-koyu.png "$BEYAZ" "$ACIKMAVI"
+yazili $V/logo-yazili-acik.png "#1B263B" "#3B82F6"
+yazili $V/logo-yazili-slogan-koyu.png "$BEYAZ" "$ACIKMAVI" "$SLOGAN"
+yazili $V/logo-yazili-slogan-acik.png "#1B263B" "#3B82F6" "$SLOGAN"
 
 # 3) Duvar kâğıtları: 3840x2160 ve 1920x1080
 duvar() { # $1=kaynak $2=ad $3=logo bindir (bos|koyu|acik)
   magick $K/$1.png -filter Lanczos -resize 3840x2160^ -gravity center -extent 3840x2160 /tmp/d.png
   if [ "$3" != bos ]; then
-    magick /tmp/d.png \( $V/logo-yazili-$3.png -resize x900 \) -gravity center -composite /tmp/d.png
+    magick /tmp/d.png \( $V/logo-yazili-slogan-$3.png -resize x1000 \) -gravity center -composite /tmp/d.png
   fi
   magick /tmp/d.png -quality 92 $V/duvar/$2-3840x2160.jpg
   magick /tmp/d.png -resize 1920x1080 -quality 92 $V/duvar/$2-1920x1080.jpg

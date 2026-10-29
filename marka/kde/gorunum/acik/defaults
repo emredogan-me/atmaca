@@ -22,4 +22,5 @@ library=org.kde.breeze
 theme=Breeze
 
 [ksplashrc][KSplash]
-Theme=org.atmaca.koyu.desktop
+Engine=none
+Theme=None

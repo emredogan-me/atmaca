@@ -1,6 +1,6 @@
 [Plymouth Theme]
 Name=Atmaca
-Description=Atmaca Linux açılış ekranı: lacivert zemin, ortada logo, altında dönen simge
+Description=Atmaca Linux açılış ekranı: lacivert zemin, ortada logo, altında ince ilerleme çubuğu
 ModuleName=two-step
 
 [two-step]
@@ -19,17 +19,29 @@ Transition=none
 TransitionDuration=0.0
 BackgroundStartColor=0x0d1b2a
 BackgroundEndColor=0x0d1b2a
+# Dönen simge yerine Fedora'daki gibi uzun, ince ilerleme çubuğu
+ProgressBarHorizontalAlignment=.5
+ProgressBarVerticalAlignment=.72
+ProgressBarWidth=360
+ProgressBarHeight=4
 ProgressBarBackgroundColor=0x1b263b
 ProgressBarForegroundColor=0x3b82f6
 MessageBelowAnimation=true
 
 [boot-up]
+UseAnimation=false
+UseProgressBar=true
 UseEndAnimation=false
 
+# Kapanışta ve yeniden başlatmada yalnızca logo; çubuk ve dönen simge yok
 [shutdown]
+UseAnimation=false
+UseProgressBar=false
 UseEndAnimation=false
 
 [reboot]
+UseAnimation=false
+UseProgressBar=false
 UseEndAnimation=false
 
 [updates]

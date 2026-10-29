@@ -1,3 +1,4 @@
 [KSplash]
-Engine=KSplashQML
-Theme=org.atmaca.koyu.desktop
+# Giriş sonrası KDE yükleme ekranı kapalı: yalnızca bilgisayar açılırken Plymouth ekranı görünür
+Engine=none
+Theme=None
