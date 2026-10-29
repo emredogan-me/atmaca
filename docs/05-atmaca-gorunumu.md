@@ -137,3 +137,18 @@ adları, menüde görünen yazılar, depo adları, açılış teması. Rapor Git
 - **ISO:** SHA256 sağlama toplamı yayımlıyoruz. İsteğe bağlı olarak bu toplam dosyası da
   GPG ile imzalanabilir; açılış için gerekli değil, indirenin dosyanın bizden geldiğini
   doğrulaması içindir.
+
+## 10. İlk sınamadan çıkan düzeltmeler
+
+- **Pencere düğmeleri:** Breeze'nin "kapat düğmesini daire içine al" ayarı yalnızca kapat
+  düğmesine uygulanıyordu; tutarsız görünüyordu. KDE'nin SVG tabanlı çerçeve altyapısıyla
+  (Aurorae) kendi çerçevemizi çizdik (`tarifler/cerceve-uret.py`): sarı küçült, yeşil büyüt,
+  kırmızı kapat; içlerinde Windows'taki gibi her zaman görünen ince beyaz işaretler.
+  Çerçeve tek parça çizilip 9 parçaya kesilir (köşeler sabit kalır, kenarlar uzar).
+- **Canlı oturum İngilizce açılıyordu:** Derlemeyi yaptığımız Fedora kabı yer kazanmak
+  için `/etc/rpm/macros.image-language-conf` içinde `%_install_langs en_US` ayarıyla gelir.
+  ISO'yu kuran araç bu ayarı devraldığı için bütün paketlerin çevirileri atlanmıştı.
+  Derlemeden önce bu dosyayı siliyoruz; denetim raporu artık Türkçe çeviri sayısını da yazar.
+- **GRUB varsayılanı:** Fedora'nın şablonunda varsayılan seçenek "Test this media"
+  (bütün USB'yi sınar, uzun sürer). Derleme kabında şablonu değiştirip varsayılanı
+  "Start Atmaca Linux", bekleme süresini 10 saniye yaptık.

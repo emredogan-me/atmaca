@@ -99,14 +99,17 @@ def main():
             if satir.strip().endswith(os.path.basename(iso.filename)):
                 beklenen = satir.split()[0]
     yol = os.path.join(hedef, os.path.basename(iso.filename))
+    # Önce geçici adla indir: aynı adlı eski bir ISO varsa onun üstüne asla yazılmaz,
+    # kaldığı yerden devam da yalnızca bu geçici dosyadan yapılır
+    gecici = yol + ".indiriliyor"
     print(f"{iso.filename}: {iso.file_size / 1024**3:.2f} GB -> {yol}")
     if iso.compress_type != zipfile.ZIP_STORED:
         sys.exit("ISO zip içinde sıkıştırılmış; bu yöntem yalnızca sıkıştırılmamışta çalışır")
 
-    mevcut = os.path.getsize(yol) if os.path.exists(yol) else 0
+    mevcut = os.path.getsize(gecici) if os.path.exists(gecici) else 0
     if mevcut > iso.file_size:
         mevcut = 0
-    with zf.open(iso) as kaynak, open(yol, "r+b" if mevcut else "wb") as cikti:
+    with zf.open(iso) as kaynak, open(gecici, "r+b" if mevcut else "wb") as cikti:
         if mevcut:
             print(f"Kaldığı yerden devam: {mevcut / 1024**3:.2f} GB zaten inmiş")
             kaynak.seek(mevcut)
@@ -126,11 +129,13 @@ def main():
                   f"kalan ~{kalan / 60:4.0f} dk", end="", flush=True)
     print("\nİndi, doğrulanıyor...")
     h = hashlib.sha256()
-    with open(yol, "rb") as f:
+    with open(gecici, "rb") as f:
         for blok in iter(lambda: f.read(PARCA), b""):
             h.update(blok)
     if beklenen and h.hexdigest() != beklenen:
-        sys.exit(f"SHA256 TUTMADI: {h.hexdigest()} (beklenen {beklenen})")
+        os.remove(gecici)
+        sys.exit(f"SHA256 TUTMADI: {h.hexdigest()} (beklenen {beklenen}); bozuk dosya silindi")
+    os.replace(gecici, yol)
     print(f"TAMAM: {yol} doğrulandı (SHA256 {h.hexdigest()})")
 
 

@@ -190,6 +190,9 @@ done
 mkdir -p $K/usr/share/color-schemes $K/etc/xdg $K/usr/lib/plasmalogin $K/usr/share/konsole \
          $K/etc/skel/.config $K/etc/anaconda/profile.d $K/etc/firefox/policies
 cp "$KOK"/marka/kde/renk/*.colors $K/usr/share/color-schemes/
+# Pencere çerçevesi (Aurorae): renkli daire düğmeler (tarifler/cerceve-uret.py üretir)
+mkdir -p $K/usr/share/aurorae/themes
+cp -r "$KOK"/marka/kde/aurorae/* $K/usr/share/aurorae/themes/
 mkdir -p $K/usr/share/icons
 cp -r "$KOK"/marka/simge/Atmaca "$KOK"/marka/simge/Atmaca-Koyu $K/usr/share/icons/
 # Klasörler: Breeze'nin kendisi, yalnızca içteki çizim beyaz (tarifler/breeze-klasor.py)

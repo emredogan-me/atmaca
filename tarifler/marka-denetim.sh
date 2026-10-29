@@ -64,5 +64,18 @@ ls "$K/usr/share/plasma/look-and-feel/" 2>/dev/null | grep -i fedora && sorun "F
 grep -h '^\(id\|about\)=' "$K/usr/lib64/firefox/distribution/distribution.ini" 2>/dev/null
 grep -h '^Name\(\[tr\]\)\?=' "$K/usr/share/applications/liveinst.desktop" 2>/dev/null
 
+baslik "Dil ve klavye"
+cat "$K/etc/locale.conf" 2>/dev/null
+cat "$K/etc/vconsole.conf" 2>/dev/null
+grep -h 'XkbLayout' "$K"/etc/X11/xorg.conf.d/*keyboard* 2>/dev/null
+N=$(ls "$K"/usr/share/locale/tr/LC_MESSAGES/ 2>/dev/null | wc -l)
+echo "Türkçe çeviri dosyası: $N"
+[ "$N" -lt 500 ] && sorun "Türkçe çeviriler eksik ($N dosya)"
+ls "$K/usr/share/locale/tr/LC_MESSAGES/plasmashell.mo" >/dev/null 2>&1 || sorun "plasmashell Türkçe çevirisi yok"
+
+baslik "Pencere çerçevesi"
+grep -h '^theme=' "$K/etc/xdg/kwinrc" 2>/dev/null
+ls "$K/usr/share/aurorae/themes/" 2>/dev/null
+
 baslik "SONUÇ"
 echo "Ciddi sorun sayısı (SORUN satırları yukarıda): $SORUN + paket/dosya satırları"
